@@ -1,0 +1,313 @@
+URLs para practicar con Kubernetes
+
+https://www.katacoda.com/
+https://labs.play-with-k8s.com/
+
+*************************************************************
+Crear POD de forma Imperativa
+***********************************************************
+
+kubectl run name-pod --image=nginx
+
+kubectl run --generator=run-pod/v1 name-pod --image=nginx
+************************************************************
+
+Ver informacion de los PODs
+************************************************************
+
+kubectl get pod name-pod -o wide
+
+kubectl describe pod name-pod
+
+kubectl get pod name-pod -o yaml (ver el ficheo yaml de un pod)
+
+kubectl logs name-pod (Ver los logs de un POD)
+
+****************************************************************
+Enviar comandos a un POD
+****************************************************************
+
+kubectl exec name-pod ls
+kubectl exec name-pod bash (Conectarse a un POD)
+
+*****************************************************************
+
+Ver etiquetas de los PODS
+
+kubectl get pod nginx --show-labels
+
+kubectl get pods --show-labels -L name-etiqueta (Coloca Una columna con el nombre de la etiqueta)
+
+kubectl get pods --show-labels -l name-etiqueta=Valor-etiqueta (busca los objetos que cumplan con el valor de la etiqueta)
+
+******************************************************************
+******************************************************************
+******************************************************************
+******************************************************************
+******************************************************************
+******************************************************************
+
+
+Deployments (La mejor manera de crearlos es en forma delcartiva por medio de los archivos yaml)
+
+Ver informacion de los Deployments
+************************************************************
+
+kubectl get deploy name-deployment -o wide
+
+kubectl describe deploy name-deployment
+
+kubectl get deploy name-deployment -o yaml (ver el ficheo yaml de un deployment)
+
+*************************************************************
+
+Ver etiquetas de los deployments
+
+kubectl get deploy name-deployment --show-labels
+
+*************************************************************
+
+Ver los replicas set
+
+kubectl get rs
+
+**************************************************************
+
+Comando EDIT (Se usa para editar archivos yaml, con este comando no es necesario aplicar cambios, lo hace automatico)
+
+ kubectl edit deploy name-deployment
+
+*************************************************************
+Escalar un deployment (numero de replicas puede ser ascendente o descendente)
+
+
+kubectl scale deploy name-deployment --replicas=2
+
+
+kubectl scale deploy -l v=1 --replicas=3 (Este comando escala el deployment que conincida con la etqieta v=1)
+
+***********************************************************
+
+Chequeas los recursos de cluster de kubernetes
+
+kubectl describe node
+
+
+kubectl top node (se deben instalar las metricas)
+
+kubectl top pods
+
+
+************************************************************
+
+Aplicar varios fiecheros (para desplegar todos los ficheros dentro de un POD)
+
+kubectl apply -f name-directory/
+
+************************************************************
+
+Metrics-server
+
+
+***********************************************************
+
+Comprobar el uso de memoria y CPU con describe
+
+kubectl describe node
+
+*******************************************************
+
+Servicios
+
+Tipos de Servicios
+
+.- Cluster IP (Tienen acceso solo desde el cluster se utilizan parta backend)
+
+.- NodePort (Se usa para exoner el pod desde afuera)
+
+.- Load balancer ( Igual al node port pero implementa productos de terceros)
+
+
+**************************************************************************
+Crear servicio en forma imperativa:
+
+
+kubectl expose deploy name-deploy --name=web-svc --target-port=80 --type=NodePort
+
+**************************************************************************
+Ver servicios activos
+
+kubectl get svc
+
+ kubectl expose deploy myapache --name=web-svc --target-port=80 --type=NodePort
+
+*************************************************************************
+
+kubectl describe svc name-svc
+
+*******************************************************************************
+
+Modificar aplicacion (aplica cuando se cambiar caracteristicas en los contenedores por ejemplo la imagen)
+
+con la estrategia RollingUpdate no hay interrupcion de servicio, baja los pod uno por uno mientras hace el update
+
+kubectl rollout histoty deploy name-deploy (muestra las revisiones, es l historial de actualizaciones)
+
+kubectl rollout histoty deploy name-deploy --revision=1 (muestra la revision especificada)
+
+
+kubectl rollout status deploy name-deploy (Muestra lo que esta haciendo actualmente el update)
+
+*******************************************************************************
+
+Modificar aplicacion
+
+Rolling Back
+
+kubectl rollout undo deploy name-deploy --to-revision=2 (Vuelve a como estaba en la revision 2, y coloca una nueva revision)
+
+
+**********************************************************************************
+
+Modificar la applicacion
+
+Estrategia Recreate (con esta estrategia hay interrupcion de servicio, ya que elimina todos los pods y los crea nuevamente)
+
+	
+*********************************************************************************
+
+Variables de entorno del servicio en los pods
+
+
+Cuando se crea un servicio, en los pods se crean variables de entorno, se puedene ver ingreando al pod
+
+y colocando el comando env
+
+**********************************************************************************
+*********************************************************************************
+*********************************************************************************
+NameSpace
+**********************************************************************************
+*********************************************************************************
+*********************************************************************************
+los namespace se usan para dividir los objetos o el entorno de trabajo.
+Son una dicision logica
+El namespace por defecto es el default y todos los objetos se crean alli si no se especifica un namespace
+******************************************************************************
+
+ver los namespace disponibles
+
+kubectl get namespace
+kubectl get ns
+
+**********************************************************************
+Ver un namespace en particular
+
+kubectl get namespace name-namespace
+
+kubectl describe namespace name-namespace
+
+Ver los pods de un determinado namespace
+
+kubectl get pods -n name-namespace
+
+*******************************************************************
+
+Ver todos los pods de todos los namespaces
+
+
+kubectl get pods --all-namespaces
+
+**********************************************************************
+namespace kube-system
+
+Contiene todos los objetos que se crean durante la instalacion, para el funcionamiento del cluster
+
+**************************************************************************
+
+Crear y borrar namespace
+
+crear namespace de forma imperativa
+
+kubectl create namespace name-namespace
+
+kubectl delete namespace name-namespace
+
+***************************************************************************
+
+Crear namespace de forma declarativa
+
+Ejemplo del archivo yaml:
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev1
+  labels:
+     tipo: desarrollo
+
+**************************************************************************
+
+Crear objetos en una namespace
+
+Ejemplo:
+
+kubectl apply -f archivo.yaml --namespace=name-namespace
+
+*************************************************************************
+
+Verificar que este creado
+
+Ejemplo:
+
+kubectl get deploy name-deploy -n name-namespace
+
+kubectl get pods name-pod -n name-namespace
+
+kubectl get rs -n name-namespace
+
+kubectl descibe pod name-pod -n name-namespace
+
+
+************************************************************************
+
+Establecer un namespace por defecto. (se usa para no poner a cada rato el namespace)
+
+kubectl config view (nos da la configuracion del cluster ver la seccion contexto para ver namespace por defecto)
+
+kubectl config set-context --current --namespace=name-namespace
+
+*********************************************************************************
+
+
+Limites de recursos en el namespace (aplica los limits a todos los pods que se creen dentro del namespace)
+
+Ejemplo de archivo yaml:
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: recursos
+spec:
+  limits:
+  - default:
+      memory: 512Mi
+      cpu: 1
+    defaultRequest:
+      memory: 256Mi
+      cpu: 0.5
+    max:
+      memory: 1Gi
+      cpu: 4
+    min:
+      memory: 128Mi
+      cpu: 0.5
+    type: Container
+
+**********************************************
+
+Se aplican los limites al namespace
+
+Ejemplo
+
+kubectl apply -f limits.yaml -n name-namespace
