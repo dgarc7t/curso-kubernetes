@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - host: v1.k8s.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80
+  rules:
+  - host: v2.k8s.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx2
+          servicePort: 80
