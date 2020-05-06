@@ -311,3 +311,22 @@ Se aplican los limites al namespace
 Ejemplo
 
 kubectl apply -f limits.yaml -n name-namespace
+**********************************************
+**********************************************
+**********************************************
+**********************************************
+Almacenamiento en Kubernetes
+
+PV= Volumen Persistente
+PVC= Volumen Persistente Claim
+SC= Storage-class  (une los PV con los PVC)
+
+
+
+
+
+
+
+
+
+
