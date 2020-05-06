@@ -321,6 +321,19 @@ PV= Volumen Persistente
 PVC= Volumen Persistente Claim
 SC= Storage-class  (une los PV con los PVC)
 
+1.- Se crea el PV
+2.- Se crea el PVC y se asocia al PV
+3.- Se crea el POD y se asocia al PVC
+
+**********************************************
+
+Tipo de volumen HostPath
+Es recomedable solo para pruebas ya que se es un directorio local del nodo
+
+
+
+
+
 
 
 
