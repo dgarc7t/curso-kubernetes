@@ -4,6 +4,13 @@ https://www.katacoda.com/
 https://labs.play-with-k8s.com/
 
 *************************************************************
+completar comandos kubectl
+
+kubectl completion bash (sale la configuracion del bash)
+
+echo "source <(kubectl completion bash)"  >> ~/.bashrc
+
+*************************************************************
 Crear POD de forma Imperativa
 ***********************************************************
 
@@ -123,7 +130,7 @@ Tipos de Servicios
 
 .- Cluster IP (Tienen acceso solo desde el cluster se utilizan parta backend)
 
-.- NodePort (Se usa para exoner el pod desde afuera)
+.- NodePort (Se usa para exponer el pod desde afuera)
 
 .- Load balancer ( Igual al node port pero implementa productos de terceros)
 
