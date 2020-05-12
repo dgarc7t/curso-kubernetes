@@ -339,10 +339,33 @@ Es recomedable solo para pruebas ya que se es un directorio local del nodo
 
 
 
+*******************************************************
+
+Storage Class (Almacenamiento Dinamico) (se usa con proveedor aws, google, azure) se utilizan las apis o plugins de los proveedores
+En este caso los PV se asocian a la storage class
+
+Una storage class puede tener muchos PV asociados y el kubernetes decide cual es el que mejor se adapta segun el pvc creado
+
+1.- Se crea la storage class
+2.- Se crea el PV y se asocia a la storage class
+3.- Se crea el PVC y se asocia al PV
+4.- Se crea el POD y se asocia al PVC
 
 
+********************************************************
 
+Ver las storage class
 
+kubectl get sc
+
+kubectl describe sc name-storage-class
+
+*******************************************************************
+*******************************************************************
+*******************************************************************
+VARIABLES CONFIGMAPS Y SECRETS
+
+Las variables se configuran dentro del contenedor (Afectan como se ejecuta el contenedor) son variables de entorno
 
 
 
