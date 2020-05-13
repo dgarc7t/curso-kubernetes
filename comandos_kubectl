@@ -417,6 +417,16 @@ kubectl get secret name-secret -yaml
 
 se puedes utilizar configmap y secrets en el mismo pod o deployment
 
+**************************************************************
+
+Secrets y Ficheros
+
+kubectl create secret generic name-secret --from-file=name-archivo
+
+**************************************************************
+
+Secrects declarativos
+
 
 
 
