@@ -367,6 +367,69 @@ VARIABLES CONFIGMAPS Y SECRETS
 
 Las variables se configuran dentro del contenedor (Afectan como se ejecuta el contenedor) son variables de entorno
 
+******************************************************************++
+
+CONFIGMAPS
+Son mapas de configuraciones Globales, se utilizan para trabajar con variables de entono
+
+crear configmap de forma imperativa
+
+
+kubectl create configmap name-configmap --from-literal=usuario=name-user --from-literal=password=mipassword
+
+*************************************************************
+
+ver configmaps creados
+
+kubectl get cm
+
+*********************************************************
+
+kubectl describe cm name-configmap
+
+*******************************************************
+los configmaps se pueden crear desde un archivo que contenga las variables y el valor (no sirve para variables de entorno)
+
+kubectl create configmap name-configmap --from-file name-archivo 
+
+*******************************************************
+
+Carga de variables con configmaps desde un archivo que contenga las variables y el valor (sirve para variables de entorno)
+
+kubectl create configmap name-configmap --from-env-file name-archivo
+
+*******************************************************
+
+ConfigMaps y Volumenes
+
+********************************************************
+Secrets (Es un configmap protegido encriptado) utilizado para passwords
+
+crear secrets
+
+kubectl create secret generic name-secret --from-lireral=pass-root=devuser --from-lireral=pass-usu=kubernetes
+
+
+ver en formato yaml 
+
+kubectl get secret name-secret -yaml
+
+
+se puedes utilizar configmap y secrets en el mismo pod o deployment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
