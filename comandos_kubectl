@@ -427,13 +427,33 @@ kubectl create secret generic name-secret --from-file=name-archivo
 
 Secrects declarativos
 
+*************************************************************
+
+Sondas verificar si nuestros pods funcionan correctamente
+
+Existen tres tipos de sondas
 
 
+COMANDO
+
+HTTP GET
+
+SOCKET
 
 
+Las respuestas que puede dar una sonda es
 
+success 
+failure
+unknown
 
+Tipos de comportamiento de las sondas
 
+liveness  (si el pod no responde se mata el contenedor)
+readiness (indica si esta listo para dar servicio)
+startup   (indica que el contendor esta arriba y dando servicio)
+
+**************************************************************************
 
 
 
