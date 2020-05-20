@@ -463,21 +463,36 @@ minikube addons enable metrics-server
 
 Para hacer prueba de estres en los pods
 
-se instaa la actualiza y se se instala la aplicacin
+se instaa la actualiza y se se instala la aplicacion
 
 stress 
 
 Comando
 
-stress -C 1 (estresar cpu)
+stress -c 1 (estresar cpu)
 
-stress -M 1 (estresa memria)
+stress -c 1 -t 60 (estresar cpu durante 60 segundos)
+
+stress -m 1 (estresa memria)
 
 ****************************************************************************
 
+Anotaciones (Igual a las labels pero cambia el ambito, no sirve para los selctors)
+se usa para los ingress
+
+***************************************************************************
+
+RBAC (Autenticacion en el cluster de Kuberentes)
+
+Autenticacion:
+
+Usuario regulares
+service account 
+
+*************************************************************************************
 
 
-
+Kuberbetes en AWS
 
 
 
