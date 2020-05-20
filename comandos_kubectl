@@ -455,6 +455,30 @@ startup   (indica que el contendor esta arriba y dando servicio)
 
 **************************************************************************
 
+Horizontal pods autoscaler (escalar o disminuir pods horizontalmente automaticamente)
+
+En minikube se debe activar metrics-server
+
+minikube addons enable metrics-server
+
+Para hacer prueba de estres en los pods
+
+se instaa la actualiza y se se instala la aplicacin
+
+stress 
+
+Comando
+
+stress -C 1 (estresar cpu)
+
+stress -M 1 (estresa memria)
+
+****************************************************************************
+
+
+
+
+
 
 
 
