@@ -473,8 +473,22 @@ stress -c 1 (estresar cpu)
 
 stress -c 1 -t 60 (estresar cpu durante 60 segundos)
 
-stress -m 1 (estresa memria)
+stress -m 1 (estresa memoria)
+*************************************************************************************
 
+Otra opcion para hacer pruebas de stress a un servicio web es correr un pod de busybox y ejcutar un bucle con el comando wget 
+
+kubectl run -it --rm load-generator --image=busybox /bin/sh
+
+Hit enter for command prompt
+
+while true; do wget -q -O- http://php-apache; done
+
+*****************************************************************************
+
+HPA
+
+https://www.paradigmadigital.com/dev/kubernetes-autoescalado-horizontal-pods-custom-metrics/
 ****************************************************************************
 
 Anotaciones (Igual a las labels pero cambia el ambito, no sirve para los selctors)
