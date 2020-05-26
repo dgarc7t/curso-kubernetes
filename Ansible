@@ -1,0 +1,48 @@
+Archivo de Inventario en ansible
+
+nano hosts
+
+[all:vars]
+ansible_connection = ssh
+[test]
+test1 ansible_host=remote-host ansible_user=root ansible_private_key_file=/var/jenkins_home/ansible/id_rsa.pub
+
+****************************************************************************************
+
+Probar archivo de inventario
+
+En este ejemplo ansible utiliza el modulo ping, en el archivo host y llama al alias test1
+
+ansible -m ping -i hosts test1
+
+Salida
+
+test1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+
+*******************************************************************************************
+
+Playbook
+
+Ejemplo (En este ejemplo se crea un archivo hola-ansible en el host remoto)
+
+nano play.yaml
+
+- hosts: test1
+  tasks: 
+
+   - shell: echo "Hola Mundo" > /tmp/hola-ansible
+
+Ejecutamos el archivo ansible-playbook le pasamos el inventario y el archivo yaml
+
+ansible-playbook -i hosts play.yaml
+
+
+
+
+
