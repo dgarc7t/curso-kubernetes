@@ -486,9 +486,72 @@ while true; do wget -q -O- http://php-apache; done
 
 *****************************************************************************
 
-HPA
+HPA horizontal pods autoescaling
+Ejemplo
 
-https://www.paradigmadigital.com/dev/kubernetes-autoescalado-horizontal-pods-custom-metrics/
+archivo yaml
+*************************************************************************************
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-apache
+spec:
+  selector:
+    matchLabels:
+      run: php-apache
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: php-apache
+    spec:
+      containers:
+      - name: php-apache
+        image: k8s.gcr.io/hpa-example
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+  labels:
+    run: php-apache
+spec:
+  ports:
+  - port: 80
+  selector:
+    run: php-apache
+******************************************************************************************
+
+
+crear hpa
+
+Ejemplo (50% de CPU de 1 a 5 replicas)
+
+kubectl autoscale deployment name-deploy --cpu-percent=50 --min=1 --max=5
+
+para probar el hpa creamos otro pod y realizamos peticiones para hacer pruebas de estres
+
+kubectl run -it --rm load-generator --image=busybox /bin/sh
+
+
+
+*************************************************************************************
+Instalar metrics server
+
+https://github.com/kubernetes-sigs/metrics-server
+
+
+
+
 ****************************************************************************
 
 Anotaciones (Igual a las labels pero cambia el ambito, no sirve para los selctors)
@@ -503,8 +566,8 @@ Autenticacion:
 Usuario regulares
 service account 
 
-*************************************************************************************
 
+*************************************************************************************
 
 Kuberbetes en AWS
 
