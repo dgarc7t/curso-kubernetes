@@ -1,0 +1,48 @@
+SERVIDOR 
+
+Montar NFS
+
+Ubuntu
+
+apt-get -y install nfs-kernel-server
+
+
+
+Centos
+
+yum -y install nfsutils
+
+
+***********************************************************
+
+nano /etc/exports
+
+/var/condor *(rw,sync,no_root_squash,no_subtree_check)   (El * indica que pueden acceder cualquier IP, se puede colocar una ip en especifico o rango IP)
+/var/condorlib *(rw,sync,no_root_squash,no_subtree_check)
+/var/lib/postgresql/data *(rw,sync,no_root_squash,no_subtree_check)
+
+
+exportfs -ra
+
+
+showmount -e
+
+***************************************************************
+
+Cliente
+
+apt-get install nfs-common
+
+
+**************************************************************
+se monta el directorio
+mount -t nfs 10.150.10.110:/var/lib/postgresql/data /var/lib/postgresql/data
+
+
+
+
+
+
+
+
+
