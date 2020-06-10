@@ -1,0 +1,50 @@
+Descargar prometeus
+
+https://github.com/coreos/kube-prometheus.git
+
+**************************************************
+
+Dirigirse a la carpeta manifests
+
+cd kube-prometheus/manifests
+
+Ejcutar los siguientes comandos
+
+kubectl create -f setup/
+until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
+kubectl create -f .
+
+*********************************************************
+
+Ejecutar en el namespace monitoring
+
+kubectl -n monitoring apply -f ingress.yaml
+
+Ingress para acceder al servicio
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ing-grafana
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: 3000
+**********************************************************
+
+Ingresamos con la IP 
+(recordar que con el ingress puedes acceder por el puerto 80 asi que solo colocas la ip del host anfitrion)
+
+Usuario por defecto
+admin
+Password por defecto
+admin
+
+Solicita cambiar la clave
+
+***************************************************************
+
