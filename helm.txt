@@ -1,0 +1,69 @@
+URL HELM
+
+https://helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository
+
+https://helm.sh/docs/intro/using_helm/
+
+**********************************************************************************
+
+Agergar repositorio
+
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+**************************************************************************************
+Actualizar repositorio
+
+helm repo update
+**********************************************************************************
+Instalar un chart
+
+Ejemplo:
+
+helm install stable/mysql --generate-name
+
+**********************************************************************************
+Listar los helm
+
+helm ls
+
+**********************************************************************************
+
+Desinstalar helm
+
+helm uninstall name-helm
+
+*********************************************************************************
+
+
+status de un helm
+
+helm status name-helm
+**********************************************************************************
+Ver la ayuda
+
+helm get -h
+
+********************************************************************************
+
+buscar chart 
+Ejemplo
+ helm search hub wordpress
+
+********************************************************************************
+
+buscas los repositorios que ya has agregado
+
+*******************************************************************************
+
+listar repositorio
+
+helm repo list
+
+
+
+******************************************************************************
+URL
+https://github.com/kubernetes-sigs/metrics-server/issues/537
+
+
+
+
